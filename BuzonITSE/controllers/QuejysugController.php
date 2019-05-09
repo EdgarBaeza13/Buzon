@@ -81,12 +81,13 @@ class QuejysugController extends Controller
         $model = new Quejysug();
 
         if ($model->load(Yii::$app->request->post())) {
-           $model -> Imagen = UploadedFile::getInstance($model, 'Imagen');
-            
-            $image_name = $model->tipo.rand(1, 4000).'.'.$model->Imagen->extension;
-            $image_path = 'uploads/'.$image_name;
-            $model->Imagen->SaveAs($image_path);
-            $model->Imagen = $image_path;
+           $model->Imagen = UploadedFile::getInstance($model, 'Imagen');
+            if ($model->Imagen) {
+                $image_name = $model->tipo . rand(1, 4000) . '.' . $model->Imagen->extension;
+                $image_path = 'uploads/' . $image_name;
+                $model->Imagen->saveAs($image_path);
+                $model->Imagen = $image_path;
+            }
             $model->save(false);
 
             
